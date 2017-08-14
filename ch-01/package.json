@@ -1,6 +1,21 @@
 {
   "name": "ch-01",
-  "version": "0.0.0",
+  "description": "nodejs MVC design pattern",
+  "license": "MIT",
+  "author": {
+    "name": "LichKing-lee",
+    "url": "https://github.com/LichKing-lee/node-blue-print-example"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LichKing-lee/node-blue-print-example.git"
+  },
+  "keywords": [
+    "MVC",
+    "Express Application",
+    "Expressjs"
+  ],
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
