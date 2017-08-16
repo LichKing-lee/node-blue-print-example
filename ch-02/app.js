@@ -8,7 +8,6 @@ var swig = require('swig');
 
 // var index = require('./routes/index');
 var index = require('./controllers/index');
-var users = require('./routes/users');
 
 var app = express();
 
