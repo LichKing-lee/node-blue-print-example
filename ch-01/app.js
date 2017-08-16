@@ -8,12 +8,29 @@ var sassMiddleware = require('node-sass-middleware');
 
 var index = require('./server/routes/index');
 var users = require('./server/routes/users');
+var comments = require('./server/controllers/comments');
+
+var mongoose = require('mongoose');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
+var passport = require('passport');
+var flash = require('connect-flash');
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'server/views/pages'));
 app.set('view engine', 'ejs');
+
+var config = require('./server/config/config.js');
+mongoose.connect(config.url, {
+    useMongoClient: true
+});
+mongoose.connection.on('error', function(){
+  console.error('MongoDB Connection Error. Make sure MongoDB is running');
+});
+
+require('./server/config/passport')(passport);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -29,8 +46,24 @@ app.use(sassMiddleware({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+    secret: 'sometextgohere',
+    saveUninitialized: true,
+    resave: true,
+    store : new MongoStore({
+        url : config.url,
+        collection : 'sessions'
+    })
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
 app.use('/', index);
 app.use('/users', users);
+app.get('/comments', comments.hasAuthorization, comments.list);
+app.post('/comments', comments.hasAuthorization, comments.create);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
