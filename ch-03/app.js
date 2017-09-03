@@ -64,31 +64,3 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-
-app.get('/', index.show);
-app.get('/login', auth.signin);
-app.post('/login', passport.authenticate('local-login', {
-	successRedirect: '/profile',
-	failureRedirect: '/login',
-	failureFlash: true
-}));
-app.get('/signup', auth.signup);
-app.post('/signup', passport.authenticate('local-signup', {
-	successRedirect: '/profile',
-	failureRedirect: '/signup',
-	failureFlash: true
-}));
-app.get('/profile', auth.isLoggedIn, auth.profile);
-app.get('/logout', function(req, res){
-	req.logout();
-	res.redirect('/');
-});
-
-app.get('/comments', comments.hasAuthorization, comments.list);
-app.post('/comments', comments.hasAuthorization, comments.create);
-
-app.get('videos', videos.hasAuthorization, videos.show);
-app.post('videos', videos.hasAuthorization, upload.single('video'), videos.uploadVideo);
-
-app.post('/images', images.hasAuthorization, upload.single('image'), images.uploadImage);
-app.get('images-gallery', images.hasAuthorization, images.show);
