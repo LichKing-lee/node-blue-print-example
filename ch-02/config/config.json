@@ -1,9 +1,10 @@
 {
   "development": {
     "username": "root",
-    "password": "147123",
+    "password": "Dlckddyd!47",
     "database": "mvc_mysql_app",
-    "host": "192.168.0.25:53306",
+    "host": "192.168.0.25",
+    "port": "53306",
     "dialect": "mysql"
   },
   "test": {
