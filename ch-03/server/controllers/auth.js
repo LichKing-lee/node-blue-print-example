@@ -8,6 +8,12 @@ exports.signin = function(req, res){
 	});
 };
 
+exports.signup = function(req, res) {
+	// List all Users and sort by Date
+	res.render('signup', { title: 'Signup Page', message: req.flash('signupMessage') });
+
+};
+
 exports.profile = function(req, res){
 	res.render('profile', {
 		title: 'Profile Page',
